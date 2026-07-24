@@ -18,6 +18,7 @@ htmlcov/
 # Local settings and credentials
 .env
 .env.*
+.streamlit/secrets.toml
 .idea/
 .vscode/
 

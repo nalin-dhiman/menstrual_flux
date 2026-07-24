@@ -33,7 +33,7 @@ Python 3.10 or newer is required.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev,data]"
+python -m pip install -e ".[dev,data,gui]"
 ```
 
 Conda users can instead create the supplied environment:
@@ -56,6 +56,21 @@ Run a short end-to-end synthetic example:
 ```bash
 make demo
 ```
+
+## Research GUI
+
+Launch the local interactive explorer:
+
+```bash
+make gui
+```
+
+The interface provides a synthetic cohort laboratory, analytic first-passage
+curves, a coupled probability-flux viewer, aggregate lifespan scenarios, data
+quality checks, and reproducible downloads. It is designed for research,
+teaching and method exploration and does not provide clinical guidance.
+
+See [docs/gui.md](docs/gui.md) for the view-by-view guide and privacy boundary.
 
 Run the reduced first-passage simulator or the resumable smoke benchmark:
 
@@ -107,6 +122,7 @@ cohorts.
 ```text
 src/digital_twin/       Reduced stochastic model and evaluation workflows
 src/menstrual_twin/     Original circular-state prototype
+app/                    Local Streamlit research explorer
 configs/                Versioned model, benchmark, and data configurations
 experiments/            Synthetic experiment grids and public-data guidance
 data/                   Schemas, templates, and small non-identifying examples

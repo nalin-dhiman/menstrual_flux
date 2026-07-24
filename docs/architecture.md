@@ -29,6 +29,10 @@ model freezes, and locked evaluation.
 variability summaries, and pass/fail gates. `digital_twin.visualization`
 contains reusable plotting functions.
 
+`digital_twin.gui` contains pure analytics and Plotly builders used by the
+Streamlit application in `app/streamlit_app.py`. The interface calls the
+scientific packages directly and keeps presentation logic outside them.
+
 ## Legacy prototype
 
 `menstrual_twin` preserves the earlier circular-state simulator and particle

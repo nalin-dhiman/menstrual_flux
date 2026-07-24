@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Menstrual Flux mark</title>
+  <desc id="desc">Two curved stage paths connected in a cycle.</desc>
+  <defs>
+    <linearGradient id="stageA" x1="18" y1="24" x2="108" y2="94" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B18AC2"/>
+      <stop offset="1" stop-color="#6F3B76"/>
+    </linearGradient>
+    <linearGradient id="stageB" x1="107" y1="34" x2="29" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7AB4A"/>
+      <stop offset="1" stop-color="#E86F61"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="56" fill="#241D30"/>
+  <path d="M27 69c-3-26 13-45 37-45 18 0 32 9 39 23" fill="none" stroke="url(#stageA)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M101 59c3 26-13 45-37 45-18 0-32-9-39-23" fill="none" stroke="url(#stageB)" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="26" cy="75" r="7" fill="#16A39B" stroke="#FBF8F3" stroke-width="3"/>
+  <circle cx="102" cy="53" r="7" fill="#E7AB4A" stroke="#FBF8F3" stroke-width="3"/>
+  <path d="M50 64h28" stroke="#FBF8F3" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+  <path d="m70 55 10 9-10 9" fill="none" stroke="#FBF8F3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+</svg>
