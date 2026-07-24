@@ -14,9 +14,39 @@ python -m pip install -e ".[gui]"
 make gui
 ```
 
-Streamlit prints a local address, normally `http://localhost:8501`. Data
-uploaded to a locally running process remain on that machine for the current
-application session.
+Keep that terminal open. The server stops when `Ctrl+C` is pressed or the
+terminal closes. Open `http://127.0.0.1:8501` in a browser on the same computer.
+Data uploaded to a locally running process remain on that machine for the
+current application session.
+
+In a second terminal, confirm that the server is healthy with:
+
+```bash
+make gui-health
+```
+
+If port 8501 is already occupied, choose another port:
+
+```bash
+make gui GUI_PORT=8502
+```
+
+and open `http://127.0.0.1:8502`.
+
+## Running over SSH
+
+If the application runs on a remote machine named `cosmos`, the browser's
+`localhost` points to the browser's machine, not automatically to `cosmos`.
+Create a tunnel from the computer that runs the browser:
+
+```bash
+ssh -L 8501:127.0.0.1:8501 ub@cosmos
+```
+
+Keep the SSH session open, run `make gui` on `cosmos`, and then open
+`http://127.0.0.1:8501` on the local computer. Streamlit's automatically shown
+network or external addresses are informational and may be blocked by routing
+or firewall rules. They are not a secure public deployment.
 
 ## Views
 

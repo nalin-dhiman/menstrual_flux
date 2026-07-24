@@ -65,6 +65,11 @@ Launch the local interactive explorer:
 make gui
 ```
 
+Keep the launch terminal open and visit `http://127.0.0.1:8501`. Pressing
+`Ctrl+C` stops the application. Use `make gui-health` from a second terminal to
+verify a running server. SSH and alternative-port instructions are in
+[docs/gui.md](docs/gui.md).
+
 The interface provides a synthetic cohort laboratory, analytic first-passage
 curves, a coupled probability-flux viewer, aggregate lifespan scenarios, data
 quality checks, and reproducible downloads. It is designed for research,
