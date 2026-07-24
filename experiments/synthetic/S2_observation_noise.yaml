@@ -1,0 +1,2 @@
+experiment: {name: S2_observation_noise, seed: 102, output_dir: outputs/experiments/S2_observation_noise}
+observation: {temperature_sd: 0.16, rhr_sd: 3.0, log_hrv_sd: 0.22, log_hormone_sd: 0.35}

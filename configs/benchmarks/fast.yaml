@@ -1,0 +1,20 @@
+benchmark:
+  name: leakage_safe_fast
+  base_config: configs/experiments/milestone_1.yaml
+  output_dir: outputs/benchmarks/fast_v2
+  seeds: [3201, 3202]
+  scenarios: [regular, heterogeneous, high_missingness, anovulatory_like, stalled_transition]
+  safety_scenarios: [anovulatory_like, stalled_transition]
+  participants: 18
+  cycles_per_participant: 6
+  particles: 220
+  forecast_samples: 220
+  issue_day: 10
+  abstention_issue_day: 21
+  adaptation_cycles: 2
+  train_fraction: 0.50
+  calibration_fraction: 0.25
+  discrepancy_grid: [0.0, 0.8, 1.2, 1.6, 2.0, 2.5]
+  robustness_cycles_per_run: 6
+  ablation_cycles_per_run: 6
+  resume: true

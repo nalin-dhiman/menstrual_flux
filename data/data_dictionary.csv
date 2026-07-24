@@ -1,0 +1,88 @@
+table,variable,dtype,required,unit,cadence,source,description,quality_control,privacy_class
+participants,participant_id,string,yes,none,once,study system,Pseudonymous stable participant identifier,Unique; never reuse,pseudonymous identifier
+participants,site_id,string,yes,none,once,study system,Recruitment or clinical site,Controlled vocabulary,quasi-identifier
+participants,consent_version,string,yes,none,at consent/update,e-consent,Version of consent agreed to,Must map to signed record,sensitive
+participants,consent_datetime_utc,datetime,yes,UTC,at consent/update,e-consent,Consent timestamp,ISO-8601; immutable,sensitive
+participants,birth_year,integer,recommended,year,once,self-report/record,Year of birth rather than full date when possible,Plausibility and eligibility check,quasi-identifier
+participants,age_at_enrollment,float,yes,years,once,derived,Age at enrollment,Range and consistency check,quasi-identifier
+participants,age_at_menarche,float,optional,years,once,self-report,Self-reported age at menarche,Flag implausible values; retain uncertainty,sensitive
+participants,bmi_baseline,float,optional,kg/m^2,baseline,measured/record,Baseline BMI,Record method and date,sensitive
+participants,life_stage,category,yes,none,baseline/update,screening,"Pre-/peri-menopausal, postpartum, etc.",Controlled vocabulary; adjudicate changes,sensitive
+participants,natural_cycling_flag,boolean,yes,none,baseline/update,screening,Not using exogenous hormonal contraception/therapy under v1 protocol,Verify at each cycle,sensitive
+participants,pregnancy_status,category,yes,none,baseline/update,self-report/test,Status relevant to exclusion and safety,Immediate protocol action; restricted access,highly sensitive
+participants,withdrawal_datetime_utc,datetime,optional,UTC,on withdrawal,study system,Withdrawal timestamp,Apply consent-specific retention/deletion rules,sensitive
+devices,device_record_id,string,yes,none,per device,study system,Unique device deployment record,Unique,pseudonymous identifier
+devices,participant_id,string,yes,none,per device,study system,Foreign key,Referential integrity,pseudonymous identifier
+devices,device_type,category,yes,none,per device,study system,"Wearable, thermometer, hormone analyzer, ultrasound machine",Controlled vocabulary,operational
+devices,manufacturer,string,yes,none,per device,device label,Manufacturer,Normalize spelling,operational
+devices,model,string,yes,none,per device,device label,Model name/number,Required for domain-shift analysis,operational
+devices,firmware_version,string,recommended,none,when changed,device export,Firmware/software version,Track all changes,operational
+devices,serial_hash,string,optional,none,per device,derived,Salted hash of serial number if needed,Never store raw serial in analysis layer,sensitive
+devices,start_datetime_utc,datetime,yes,UTC,per deployment,study system,Deployment start,ISO-8601,operational
+devices,end_datetime_utc,datetime,optional,UTC,per deployment,study system,Deployment end,Must be after start,operational
+daily_observations,participant_id,string,yes,none,daily,derived,Foreign key,Referential integrity,pseudonymous identifier
+daily_observations,local_date,date,yes,local calendar,daily,derived,Participant-local analysis day,Derived using recorded time zone,quasi-identifier
+daily_observations,timezone_name,string,yes,IANA,daily/change,device/app,IANA time zone,Reject ambiguous abbreviations,quasi-identifier
+daily_observations,day_in_study,integer,yes,days,daily,derived,Relative study day,Positive and increasing,operational
+daily_observations,bleeding_any,boolean,yes,none,daily,diary,Any bleeding reported,Distinguish missing from false,sensitive
+daily_observations,bleeding_intensity,ordinal,recommended,0-4,daily,diary,None/spotting/light/moderate/heavy,Use validated or pre-specified scale,sensitive
+daily_observations,temperature_c,float,tier1,deg C,nightly/daily,thermometer/wearable,Basal or nightly temperature summary,"Record body site, aggregation, wear time and quality",sensitive
+daily_observations,temperature_measurement_type,category,tier1,none,daily,device metadata,"Oral BBT, wrist skin, finger skin, etc.",Never pool types without device model,operational
+daily_observations,rhr_bpm,float,tier1,beats/min,daily,wearable,Resting heart rate summary,Record manufacturer definition,sensitive
+daily_observations,hrv_rmssd_ms,float,optional,ms,daily,wearable,HRV RMSSD or documented alternative,Record metric and valid wear window,sensitive
+daily_observations,sleep_duration_hours,float,tier1,hours,daily,wearable/diary,Sleep duration,Cross-midnight handling; wear-time threshold,sensitive
+daily_observations,activity_minutes_mvpa,float,optional,minutes,daily,wearable,Moderate-to-vigorous activity,Record algorithm version,sensitive
+daily_observations,wear_time_hours,float,tier1,hours,daily,wearable,Valid wear time,Pre-specified minimum; do not impute silently,operational
+daily_observations,stress_score,ordinal,recommended,0-5,daily,diary,Perceived stress,Same prompt and scale throughout,sensitive
+daily_observations,illness_flag,boolean,recommended,none,daily,diary,Acute illness or fever,Capture onset and resolution separately,sensitive
+daily_observations,travel_shiftwork_flag,boolean,optional,none,daily,diary,Travel across time zones or night shift,Record time-zone displacement when possible,sensitive
+daily_observations,missingness_reason,category,yes when missing,none,daily,study system,"Device failure, nonwear, skipped test, unknown",Never encode missing as zero,operational
+daily_observations,source_file_id,string,yes,none,daily,ETL,Raw-file provenance identifier,Must map to immutable raw object,operational
+daily_observations,qc_status,category,yes,none,daily,ETL/QC,"Pass, warning, excluded",Rules version must be recorded,operational
+hormone_tests,hormone_test_id,string,yes,none,per test,study system,Unique assay record,Unique,pseudonymous identifier
+hormone_tests,participant_id,string,yes,none,per test,study system,Foreign key,Referential integrity,pseudonymous identifier
+hormone_tests,collection_datetime_local,datetime,tier2,local time,daily/targeted,participant/device,Sample collection timestamp,Document first-morning urine and fasting rules,quasi-identifier
+hormone_tests,timezone_name,string,tier2,IANA,per test,device/app,Time zone at collection,Required for alignment,quasi-identifier
+hormone_tests,analyte,category,tier2,none,per test,assay,"LH, E3G, PdG, serum E2, P4, FSH",Controlled vocabulary,sensitive
+hormone_tests,value,float,tier2,analyte-specific,per test,assay,Measured concentration,Must be nonnegative; retain below-limit flag,sensitive
+hormone_tests,unit,string,tier2,analyte-specific,per test,assay,Original unit,Do not convert without retaining original,operational
+hormone_tests,assay_platform,string,tier2,none,per test,assay metadata,Consumer analyzer or laboratory platform,Required for calibration,operational
+hormone_tests,lot_number_hash,string,recommended,none,per lot,study system,Hashed reagent lot identifier,Track lot effects without exposing inventory IDs,operational
+hormone_tests,dilution_or_repeat_flag,boolean,recommended,none,per test,assay,Repeat/dilution required,Pre-specify selection rule,operational
+hormone_tests,limit_of_detection,float,recommended,analyte-specific,per assay,lab metadata,Assay lower detection limit,"Use censored likelihood, not zero substitution",operational
+hormone_tests,qc_status,category,yes,none,per test,lab/QC,"Pass, warning, failed",Failed assays excluded but retained in raw layer,operational
+exposures,exposure_id,string,yes,none,per event,study system,Unique exposure event,Unique,pseudonymous identifier
+exposures,participant_id,string,yes,none,per event,study system,Foreign key,Referential integrity,pseudonymous identifier
+exposures,exposure_type,category,yes,none,per event,diary/record,"Illness, travel, sleep loss, exercise load, acute stress",Controlled ontology,sensitive
+exposures,start_datetime_local,datetime,yes,local time,per event,diary/record,Exposure onset,Allow interval censoring,quasi-identifier
+exposures,end_datetime_local,datetime,optional,local time,per event,diary/record,Exposure end,Must be after start,quasi-identifier
+exposures,severity,ordinal/float,recommended,predefined,per event,diary/record,Severity or dose,Exposure-specific scale,sensitive
+exposures,confidence,ordinal,recommended,low/medium/high,per event,adjudication,Confidence in timestamp and type,Required for resilience analysis,operational
+medications,medication_event_id,string,yes,none,per event,study system,Unique medication event,Unique,pseudonymous identifier
+medications,participant_id,string,yes,none,per event,study system,Foreign key,Referential integrity,pseudonymous identifier
+medications,ingredient_code,string,recommended,RxNorm/ATC/local,per event,self-report/record,Standardized ingredient code,Manual reconciliation,highly sensitive
+medications,start_date,date,yes,date,per event,self-report/record,Start date,Allow uncertainty bounds,highly sensitive
+medications,stop_date,date,optional,date,per event,self-report/record,Stop date,Must be after start,highly sensitive
+medications,dose_text,string,optional,free text,per event,self-report/record,Dose and schedule as reported,Do not infer dose without verification,highly sensitive
+symptoms,symptom_record_id,string,yes,none,daily/event,study system,Unique symptom record,Unique,pseudonymous identifier
+symptoms,participant_id,string,yes,none,daily/event,study system,Foreign key,Referential integrity,pseudonymous identifier
+symptoms,timestamp_local,datetime,yes,local time,daily/event,diary,Symptom assessment time,Standard window preferred,quasi-identifier
+symptoms,symptom_code,category,yes,ontology,daily/event,diary,"Pain, mood, headache, fatigue, etc.",Controlled vocabulary,sensitive
+symptoms,severity,ordinal,yes,0-4 or validated,daily/event,diary,Severity,Use validated scale when available,sensitive
+symptoms,interference,ordinal,optional,0-4,daily/event,diary,Functional interference,Same prompt throughout,sensitive
+reference_labels,label_id,string,yes,none,per label,adjudication,Unique reference label,Unique,pseudonymous identifier
+reference_labels,participant_id,string,yes,none,per label,study system,Foreign key,Referential integrity,pseudonymous identifier
+reference_labels,label_type,category,yes,none,per label,adjudication,"Ovulation, menses onset, phase transition, anovulation",Controlled vocabulary,sensitive
+reference_labels,time_lower_local,datetime,yes,local time,per label,adjudication,Lower bound of event interval,Must not exceed upper bound,quasi-identifier
+reference_labels,time_upper_local,datetime,yes,local time,per label,adjudication,Upper bound of event interval,Represents label uncertainty,quasi-identifier
+reference_labels,reference_method,category,yes,none,per label,adjudication,"Ultrasound, serum, LH+PdG composite, temperature shift, bleeding report",Pre-specified hierarchy,sensitive
+reference_labels,confidence_grade,category,yes,A/B/C/D,per label,adjudication,Evidence grade,Blind dual review for primary labels,operational
+reference_labels,adjudicator_ids,string,recommended,none,per label,adjudication,Pseudonymous adjudicator IDs,At least two for ambiguous labels,operational
+reference_labels,adjudication_notes,string,optional,none,per label,adjudication,Reasoning and discrepancies,Restricted and redacted for sharing,sensitive
+data_quality_flags,flag_id,string,yes,none,per flag,ETL/QC,Unique flag,Unique,operational
+data_quality_flags,participant_id,string,yes,none,per flag,study system,Foreign key,Referential integrity,pseudonymous identifier
+data_quality_flags,table_name,string,yes,none,per flag,ETL/QC,Affected table,Must exist,operational
+data_quality_flags,record_key,string,yes,none,per flag,ETL/QC,Affected record key,Must resolve,operational
+data_quality_flags,rule_id,string,yes,none,per flag,ETL/QC,Versioned QC rule identifier,Immutable rule version,operational
+data_quality_flags,severity,category,yes,none,per flag,ETL/QC,"Info, warning, error, exclusion",Controlled vocabulary,operational
+data_quality_flags,resolution,category,optional,none,per flag,QC,"Open, confirmed, corrected, accepted",Audit trail required,operational

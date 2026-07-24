@@ -1,0 +1,6 @@
+stage_model: reduced_two_stage_first_passage
+states: [stage, progress, log_speed]
+stage_boundary: 1.0
+perturbation_coordinate_enabled: false
+hierarchical: true
+claim_scope: synthetic_research_only

@@ -1,0 +1,3 @@
+experiment: {name: S7_anovulatory_like, seed: 107, output_dir: outputs/experiments/S7_anovulatory_like}
+data: {participants: 20, cycles_per_participant: 5, scenario: anovulatory_like}
+process: {anovulatory_like_probability: 0.4}

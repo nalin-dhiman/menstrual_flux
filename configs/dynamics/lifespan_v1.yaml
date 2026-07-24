@@ -1,0 +1,60 @@
+experiment:
+  name: reproductive_lifespan_first_passage_v1
+  output_dir: outputs/dynamics/lifespan_v1
+
+aggregate_age_data:
+  path: data/theory/menstrual_age_aggregate_2024.csv
+  source_doi: 10.1038/s41598-024-60373-3
+  role: published_aggregate_constraint_not_independent_validation
+
+simulation:
+  participants: 500
+  seed: 20260727
+  menarche_mean_age: 12.5
+  menarche_sd_years: 1.0
+  reserve_log10_offset_sd: 0.30
+  participant_log_duration_sd: 0.07
+  menopause_threshold_follicles: 1000.0
+  luteal_mean_days: 13.5
+  follicular_variance_fraction: 0.75
+  maximum_age: 65.0
+
+sensitivity:
+  participants_per_setting: 150
+  parameters:
+    menarche_mean_age: [11.5, 13.5]
+    reserve_log10_offset_sd: [0.20, 0.40]
+    menopause_threshold_follicles: [500.0, 2000.0]
+    participant_log_duration_sd: [0.03, 0.12]
+    luteal_mean_days: [12.5, 14.5]
+    follicular_variance_fraction: [0.60, 0.90]
+
+interruption_scenarios:
+  participants_per_scenario: 300
+  scenarios:
+    uninterrupted: []
+    two_births_short_postpartum:
+      - {state: pregnancy, start_age: 27.0, end_age: 27.767}
+      - {state: postpartum_nonlactating_assumption, start_age: 27.767, end_age: 27.882}
+      - {state: pregnancy, start_age: 31.0, end_age: 31.767}
+      - {state: postpartum_nonlactating_assumption, start_age: 31.767, end_age: 31.882}
+    two_births_six_month_lam:
+      - {state: pregnancy, start_age: 27.0, end_age: 27.767}
+      - {state: postpartum_lactational_amenorrhea, start_age: 27.767, end_age: 28.267}
+      - {state: pregnancy, start_age: 31.0, end_age: 31.767}
+      - {state: postpartum_lactational_amenorrhea, start_age: 31.767, end_age: 32.267}
+    two_births_twelve_month_postpartum:
+      - {state: pregnancy, start_age: 27.0, end_age: 27.767}
+      - {state: extended_postpartum_amenorrhea_assumption, start_age: 27.767, end_age: 28.767}
+      - {state: pregnancy, start_age: 31.0, end_age: 31.767}
+      - {state: extended_postpartum_amenorrhea_assumption, start_age: 31.767, end_age: 32.767}
+    cycle_suppressing_hormonal_exposure:
+      - {state: cycle_suppressing_hormonal_exposure, start_age: 20.0, end_age: 27.0}
+      - {state: cycle_suppressing_hormonal_exposure, start_age: 34.0, end_age: 39.0}
+    combined_example:
+      - {state: cycle_suppressing_hormonal_exposure, start_age: 20.0, end_age: 25.0}
+      - {state: pregnancy, start_age: 27.0, end_age: 27.767}
+      - {state: postpartum_lactational_amenorrhea, start_age: 27.767, end_age: 28.267}
+      - {state: pregnancy, start_age: 31.0, end_age: 31.767}
+      - {state: postpartum_lactational_amenorrhea, start_age: 31.767, end_age: 32.267}
+      - {state: cycle_suppressing_hormonal_exposure, start_age: 35.0, end_age: 40.0}

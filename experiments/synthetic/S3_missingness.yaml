@@ -1,0 +1,2 @@
+experiment: {name: S3_missingness, seed: 103, output_dir: outputs/experiments/S3_missingness}
+missingness: {mechanism: mixed, mcar_probability: 0.2, mar_probability: 0.18, informative_probability: 0.12, hormone_schedule_days: 5, block_probability: 0.35}

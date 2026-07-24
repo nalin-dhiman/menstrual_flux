@@ -1,0 +1,12 @@
+name: menstrual-digital-twin
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.10
+  - matplotlib>=3.7
+  - pyyaml>=6.0
+  - pytest>=7.4
+  - pip

@@ -1,0 +1,2 @@
+experiment: {name: S10_ablation, seed: 110, output_dir: outputs/experiments/S10_ablation}
+data: {participants: 20, cycles_per_participant: 5, scenario: mixed}

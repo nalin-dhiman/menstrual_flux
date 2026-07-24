@@ -1,0 +1,7 @@
+source: synthetic_milestone_1
+path: data/synthetic
+timezone: UTC
+signals: [bleeding, temperature, resting_heart_rate, hrv, sleep_duration, sleep_efficiency, lh, e3g, pdg, estradiol, progesterone, symptom_severity]
+filters:
+  require_availability_before_issue_time: true
+  retain_missingness_reason: true

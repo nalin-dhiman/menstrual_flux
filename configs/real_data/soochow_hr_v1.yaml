@@ -1,0 +1,30 @@
+source_dataset: soochow-fudan-heart-rate-mendeley-v58stpfcnm-v1
+seed: 20260725
+split:
+  train_fraction: 0.60
+  calibration_fraction: 0.20
+  stratify_by: device_type
+tasks:
+  next_menses:
+    issue_day: 7
+    minimum_history_cycles: 1
+    rolling_window: 3
+  lh_transition:
+    issue_day: 7
+    rolling_window: 3
+evaluation:
+  interval_levels: [0.50, 0.80, 0.90, 0.95]
+  forecast_samples: 1200
+  bootstrap_replicates: 5000
+feature_model:
+  signals: [night_heart_rate_median, daily_heart_rate_mean, bleeding_reported]
+  ridge_penalty: 10.0
+digital_twin:
+  base_config: configs/experiments/milestone_1.yaml
+  particles: 500
+  forecast_samples: 1200
+  forecast_horizon_days: 60
+  modalities:
+    all: [resting_heart_rate, bleeding]
+    wearable: [resting_heart_rate]
+    bleeding: [bleeding]

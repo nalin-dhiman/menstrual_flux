@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "menstrual-digital-twin"
+version = "0.4.0"
+description = "Research implementation of a hierarchical stochastic menstrual-cycle digital twin"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+  "PyYAML>=6.0"
+]
+
+[project.scripts]
+digital-twin = "digital_twin.cli.main:main"
+
+[project.optional-dependencies]
+data = ["pyarrow>=14"]
+dev = ["pytest>=7.4", "ruff>=0.5", "mypy>=1.10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.setuptools.packages.find]
+where = ["src"]

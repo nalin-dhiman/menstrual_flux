@@ -1,0 +1,20 @@
+benchmark:
+  name: leakage_safe_smoke
+  base_config: configs/experiments/milestone_1.yaml
+  output_dir: outputs/benchmarks/smoke
+  seeds: [3001]
+  scenarios: [regular, anovulatory_like, stalled_transition]
+  safety_scenarios: [anovulatory_like, stalled_transition]
+  participants: 9
+  cycles_per_participant: 5
+  particles: 80
+  forecast_samples: 80
+  issue_day: 10
+  abstention_issue_day: 21
+  adaptation_cycles: 2
+  train_fraction: 0.45
+  calibration_fraction: 0.22
+  discrepancy_grid: [0.0, 1.0, 2.0]
+  robustness_cycles_per_run: 2
+  ablation_cycles_per_run: 2
+  resume: true

@@ -1,0 +1,29 @@
+source_dataset: mcPHASES-1.0.0
+seed: 20260723
+split:
+  train_fraction: 0.60
+  calibration_fraction: 0.20
+  stratify_by: has_interval_2024
+tasks:
+  next_menses:
+    issue_day: 10
+    minimum_history_cycles: 1
+    rolling_window: 3
+    minimum_cycle_days: 15
+    maximum_cycle_days: 60
+  device_transition:
+    issue_day: 7
+    rolling_window: 3
+evaluation:
+  interval_levels: [0.50, 0.80, 0.90, 0.95]
+  forecast_samples: 1500
+  bootstrap_replicates: 5000
+digital_twin:
+  base_config: configs/experiments/milestone_1.yaml
+  particles: 500
+  forecast_samples: 1500
+  forecast_horizon_days: 60
+  modalities:
+    all: [temperature, resting_heart_rate, hrv, lh, e3g, pdg, bleeding]
+    hormones: [lh, e3g, pdg]
+    wearables: [temperature, resting_heart_rate, hrv]

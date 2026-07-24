@@ -1,0 +1,4 @@
+experiment: {name: S1_oracle, seed: 101, output_dir: outputs/experiments/S1_oracle}
+data: {participants: 12, cycles_per_participant: 5, scenario: stable}
+missingness: {mechanism: none, mcar_probability: 0, mar_probability: 0, informative_probability: 0, hormone_schedule_days: 1}
+process: {anovulatory_like_probability: 0}

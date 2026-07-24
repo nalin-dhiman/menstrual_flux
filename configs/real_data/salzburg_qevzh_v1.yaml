@@ -1,0 +1,30 @@
+source_dataset: salzburg-salivary-hormones-osf-qevzh
+seed: 20260724
+split:
+  train_fraction: 0.60
+  calibration_fraction: 0.20
+  stratify_by: has_lh_reference
+tasks:
+  next_menses:
+    issue_day: 7
+    minimum_history_cycles: 1
+    rolling_window: 3
+  lh_transition:
+    issue_day: 7
+    rolling_window: 3
+evaluation:
+  interval_levels: [0.50, 0.80, 0.90, 0.95]
+  forecast_samples: 1200
+  bootstrap_replicates: 5000
+feature_model:
+  signals: [salivary_estradiol, salivary_progesterone, bleeding_reported]
+  ridge_penalty: 10.0
+digital_twin:
+  base_config: configs/experiments/milestone_1.yaml
+  particles: 500
+  forecast_samples: 1200
+  forecast_horizon_days: 60
+  modalities:
+    all: [estradiol, progesterone, bleeding]
+    hormones: [estradiol, progesterone]
+    bleeding: [bleeding]

@@ -1,0 +1,4 @@
+level: INFO
+save_environment: true
+save_checksums: true
+structured_log: outputs/experiments/milestone_1/run.log

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Test and development caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local settings and credentials
+.env
+.env.*
+.idea/
+.vscode/
+
+# Generated scientific artifacts
+outputs/
+results/
+logs/
+*.log
+
+# Local or restricted datasets
+data/external/
+data/raw/
+data/curated/
+data/synthetic/
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.mat
+*.zip
+
+# Document-build and submission artifacts
+manuscript/
+submission/
+submission_packages/
+*.tex
+*.aux
+*.bbl
+*.blg
+*.docx
+*.pdf
+
+# Operating-system files
+.DS_Store
+Thumbs.db

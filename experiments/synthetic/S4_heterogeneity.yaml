@@ -1,0 +1,3 @@
+experiment: {name: S4_heterogeneity, seed: 104, output_dir: outputs/experiments/S4_heterogeneity}
+data: {participants: 30, cycles_per_participant: 5, scenario: mixed}
+process: {between_person_log_speed_sd: 0.24}

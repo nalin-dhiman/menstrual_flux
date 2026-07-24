@@ -1,0 +1,2 @@
+experiment: {name: S8_misspecification_partial, seed: 108, output_dir: outputs/experiments/S8_misspecification_partial}
+observation: {heavy_tail_df: 3.0, temperature_sd: 0.14, log_hormone_sd: 0.32}

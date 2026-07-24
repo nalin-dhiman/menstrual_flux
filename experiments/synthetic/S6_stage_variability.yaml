@@ -1,0 +1,3 @@
+experiment: {name: S6_stage_variability, seed: 106, output_dir: outputs/experiments/S6_stage_variability}
+data: {participants: 24, cycles_per_participant: 6, scenario: mixed}
+process: {cycle_effect_sd_f: 0.12, cycle_effect_sd_l: 0.08}

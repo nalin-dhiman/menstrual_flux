@@ -1,0 +1,24 @@
+benchmark:
+  name: v04_development_smoke
+  base_config: configs/experiments/milestone_1.yaml
+  output_dir: outputs/benchmarks/v04_smoke_v2
+  seeds: [5501]
+  scenarios: [regular, heterogeneous, high_missingness, anovulatory_like, stalled_transition]
+  safety_scenarios: [anovulatory_like, stalled_transition]
+  participants: 12
+  cycles_per_participant: 5
+  particles: 120
+  forecast_samples: 160
+  issue_day: 10
+  abstention_issue_day: 21
+  adaptation_cycles: 2
+  train_fraction: 0.50
+  calibration_fraction: 0.25
+  discrepancy_grid: [0.0, 0.8, 1.2, 1.6, 2.0]
+  fusion_temperature_grid: [0.5, 1.0, 2.0, 4.0, 8.0]
+  fusion_missingness_floor_grid: [0.0, 0.1, 0.25, 0.5, 1.0]
+  fusion_spread_grid: [1.0, 1.25, 1.5, 2.0, 2.5]
+  robustness_cycles_per_run: 3
+  ablation_cycles_per_run: 0
+  minimum_eligible_fraction: 0.99
+  resume: true

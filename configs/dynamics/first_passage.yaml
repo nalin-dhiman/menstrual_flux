@@ -1,0 +1,68 @@
+experiment:
+  name: menstrual_first_passage_dynamics_v1_2
+  seed: 20260726
+  output_dir: outputs/dynamics/first_passage_v1
+
+sources:
+  salzburg:
+    curated_dir: outputs/real_data/salzburg_qevzh_curated_v1
+    signals: [salivary_estradiol, salivary_progesterone]
+  soochow:
+    curated_dir: outputs/real_data/soochow_hr_curated_v1
+    signals: [night_heart_rate_median]
+
+coupled_fokker_planck:
+  follicular_drift: 0.07142857142857142
+  luteal_drift: 0.07142857142857142
+  follicular_diffusion: 0.00015
+  luteal_diffusion: 0.00010
+  dz: 0.002
+  dt: 0.002
+  max_time: 90.0
+  store_every: 10
+
+coupled_ou_fokker_planck:
+  follicular_mean_speed: 0.07142857142857142
+  luteal_mean_speed: 0.07142857142857142
+  follicular_progress_diffusion: 0.00015
+  luteal_progress_diffusion: 0.00010
+  follicular_kappa: 0.35
+  luteal_kappa: 0.45
+  follicular_log_speed_sigma: 0.035
+  luteal_log_speed_sigma: 0.025
+  dz: 0.02
+  log_speed_min: -3.8
+  log_speed_max: -1.8
+  dell: 0.04
+  dt: 0.01
+  max_time: 90.0
+  store_every: 10
+
+analytic_limit:
+  boundary: 1.0
+  exact_samples: 100000
+
+regime_map:
+  mean_duration: 14.0
+  peclet_values: [5.0, 10.0, 20.0, 40.0, 80.0, 160.0]
+  relaxation_values: [0.1, 0.3, 1.0, 3.0, 10.0]
+  stationary_log_speed_sd: 0.12
+  trajectories: 3000
+  dt: 0.05
+  max_time: 60.0
+
+identifiability:
+  sample_sizes: [10, 30, 100]
+  replicates: 60
+  drift_range: [0.029411764705882353, 0.041666666666666664]
+  diffusion_range: [0.00005, 0.00080]
+  posterior_grid_size: 45
+  target_mean_speed: 0.03571428571428571
+  target_kappa: 0.20
+  target_stationary_log_speed_sd: 0.12
+  target_diffusion: 0.00020
+  kappa_values: [0.02, 0.05, 0.10, 0.20, 0.40, 0.80]
+  stationary_sd_values: [0.03, 0.06, 0.09, 0.12, 0.18, 0.24]
+  ou_trajectories: 2500
+  ou_dt: 0.05
+  ou_max_time: 70.0

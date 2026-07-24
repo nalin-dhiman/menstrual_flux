@@ -1,0 +1,42 @@
+seed: 20260721
+
+process:
+  dt_days: 1.0
+  mean_cycle_days: 29.0
+  log_omega_reversion: 0.06
+  log_omega_sd: 0.012
+  phase_diffusion_sd: 0.035
+  amplitude_recovery: 0.22
+  amplitude_sd: 0.08
+  amplitude_to_phase: 0.02
+  sleep_effect_on_phase: -0.004
+  stress_effect_on_amplitude: 0.08
+  illness_effect_on_amplitude: 0.25
+  ovulation_phase_fraction: 0.56
+
+observation:
+  temperature_baseline_c: 36.45
+  temperature_luteal_shift_c: 0.22
+  temperature_sd_c: 0.08
+  rhr_baseline_bpm: 62.0
+  rhr_luteal_shift_bpm: 2.3
+  rhr_sd_bpm: 1.5
+  lh_baseline: 3.0
+  lh_surge_amplitude: 26.0
+  lh_log_sd: 0.22
+  e3g_baseline: 45.0
+  e3g_peak_amplitude: 155.0
+  e3g_log_sd: 0.18
+  pdg_baseline: 1.5
+  pdg_luteal_amplitude: 10.0
+  pdg_log_sd: 0.20
+  bleeding_logit_peak: 5.0
+  bleeding_logit_floor: -6.0
+  missing_probability: 0.08
+
+filter:
+  particles: 1500
+  resample_ess_fraction: 0.50
+  prior_cycle_days_sd: 3.5
+  forecast_horizon_days: 60
+  forecast_replicates_per_particle: 1

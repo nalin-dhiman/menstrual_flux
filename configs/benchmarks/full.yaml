@@ -1,0 +1,20 @@
+benchmark:
+  name: leakage_safe_full
+  base_config: configs/experiments/milestone_1.yaml
+  output_dir: outputs/benchmarks/full
+  seeds: [4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111, 4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120]
+  scenarios: [regular, heterogeneous, high_noise, high_missingness, drift, follicular_dominant, luteal_dominant, anovulatory_like, stalled_transition]
+  safety_scenarios: [anovulatory_like, stalled_transition]
+  participants: 40
+  cycles_per_participant: 7
+  particles: 800
+  forecast_samples: 1000
+  issue_day: 10
+  abstention_issue_day: 21
+  adaptation_cycles: 2
+  train_fraction: 0.50
+  calibration_fraction: 0.25
+  discrepancy_grid: [0.0, 0.5, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.3, 2.6, 3.0]
+  robustness_cycles_per_run: 20
+  ablation_cycles_per_run: 0
+  resume: true

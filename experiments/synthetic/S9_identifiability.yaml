@@ -1,0 +1,3 @@
+experiment: {name: S9_identifiability, seed: 109, output_dir: outputs/experiments/S9_identifiability}
+data: {participants: 40, cycles_per_participant: 7, scenario: mixed}
+inference: {particles: 800, forecast_samples: 800}

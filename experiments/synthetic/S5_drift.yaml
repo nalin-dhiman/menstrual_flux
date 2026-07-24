@@ -1,0 +1,3 @@
+experiment: {name: S5_drift, seed: 105, output_dir: outputs/experiments/S5_drift}
+data: {participants: 20, cycles_per_participant: 7, scenario: slow_drift}
+process: {drift_per_cycle_sd: 0.04}

@@ -1,0 +1,64 @@
+experiment:
+  name: milestone_1
+  seed: 20260721
+  output_dir: outputs/experiments/milestone_1
+
+data:
+  participants: 20
+  cycles_per_participant: 5
+  start_date: "2026-01-01"
+  timezone: UTC
+  scenario: mixed
+
+process:
+  dt_days: 1.0
+  follicular_days: 14.0
+  luteal_days: 14.0
+  kappa_log_speed_f: 0.35
+  kappa_log_speed_l: 0.45
+  sigma_log_speed_f: 0.035
+  sigma_log_speed_l: 0.025
+  sigma_progress_f: 0.006
+  sigma_progress_l: 0.004
+  between_person_log_speed_sd: 0.12
+  cycle_effect_sd_f: 0.08
+  cycle_effect_sd_l: 0.04
+  cycle_effect_rho_f: 0.45
+  cycle_effect_rho_l: 0.25
+  drift_per_cycle_sd: 0.01
+  anovulatory_like_probability: 0.04
+
+observation:
+  temperature_sd: 0.08
+  rhr_sd: 1.6
+  log_hrv_sd: 0.12
+  sleep_duration_sd: 0.7
+  sleep_efficiency_sd: 0.035
+  log_hormone_sd: 0.20
+  heavy_tail_df: 5.0
+  assay_detection_limit: 0.5
+
+missingness:
+  mechanism: mixed
+  mcar_probability: 0.08
+  mar_probability: 0.08
+  informative_probability: 0.06
+  hormone_schedule_days: 3
+  block_probability: 0.10
+  block_min_days: 3
+  block_max_days: 8
+  report_delay_probability: 0.15
+  max_report_delay_days: 3
+
+inference:
+  particles: 500
+  ess_threshold: 0.50
+  resampling: systematic
+  forecast_horizon_days: 60
+  forecast_samples: 500
+  forecast_model_discrepancy_sd_days: 1.7
+
+evaluation:
+  issue_day: 10
+  interval_levels: [0.50, 0.80, 0.90, 0.95]
+  rolling_windows: [1, 2, 3]
