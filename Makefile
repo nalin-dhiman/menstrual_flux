@@ -2,14 +2,18 @@ PYTHON ?= python3
 PYTHONPATH := src
 GUI_HOST ?= 127.0.0.1
 GUI_PORT ?= 8501
+PLANNER_HOST ?= 127.0.0.1
+PLANNER_PORT ?= 8765
 
-.PHONY: help install test gui gui-health validate-example demo simulate benchmark-smoke
+.PHONY: help install test gui gui-health planner planner-test validate-example demo simulate benchmark-smoke
 
 help:
 	@echo "install          Install the package with development dependencies"
 	@echo "test             Run the complete test suite"
 	@echo "gui              Launch the local research explorer"
 	@echo "gui-health       Check a GUI server already running in another terminal"
+	@echo "planner          Launch the installable local Cycle Planner"
+	@echo "planner-test     Test the transparent Cycle Planner forecast"
 	@echo "validate-example Validate the included synthetic observation example"
 	@echo "demo             Run the legacy circular-model synthetic demonstration"
 	@echo "simulate         Simulate a cohort with the reduced first-passage model"
@@ -28,6 +32,13 @@ gui:
 
 gui-health:
 	@curl --fail --silent --show-error http://$(GUI_HOST):$(GUI_PORT)/_stcore/health
+
+planner:
+	@echo "Open http://$(PLANNER_HOST):$(PLANNER_PORT)/planner/ in a browser."
+	$(PYTHON) -m http.server $(PLANNER_PORT) --bind $(PLANNER_HOST) --directory docs/site
+
+planner-test:
+	node --test consumer_app/tests/model.test.mjs
 
 validate-example:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m digital_twin.cli validate-data data/example_common_observations.csv

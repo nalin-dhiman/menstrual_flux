@@ -18,6 +18,12 @@ The interactive interface and complete screenshot gallery are documented in
 the [GitHub Pages interface](https://nalin-dhiman.github.io/menstrual_flux/),
 which presents the same live application in a project-branded host.
 
+[Open the Cycle Planner](https://nalin-dhiman.github.io/menstrual_flux/planner/)
+for a separate, installable and local-only period-planning experience. The
+planner estimates a date range from recorded period starts. It does not
+estimate fertility or provide clinical guidance. Its design and privacy
+boundary are documented in [consumer_app/README.md](consumer_app/README.md).
+
 ## What is included
 
 - A reduced two-stage follicular/luteal first-passage model.
@@ -58,6 +64,7 @@ python -m pip install -e .
 ```bash
 make test
 make validate-example
+make planner-test
 ```
 
 Run a short end-to-end synthetic example:
@@ -85,6 +92,21 @@ quality checks, and reproducible downloads. It is designed for research,
 teaching and method exploration and does not provide clinical guidance.
 
 See [docs/gui.md](docs/gui.md) for the view-by-view guide and privacy boundary.
+
+## Cycle Planner
+
+The Cycle Planner is a static Progressive Web App and can be installed from a
+supported desktop or mobile browser. It requires no Python process:
+
+```bash
+make planner
+```
+
+Then visit `http://127.0.0.1:8765/planner/`. Period starts, age
+acknowledgement, and example-mode state remain in that browser's local storage.
+The public release contains no account, analytics, advertising, cloud
+submission, symptom collection, fertility calculation, or research-upload
+endpoint.
 
 Run the reduced first-passage simulator or the resumable smoke benchmark:
 

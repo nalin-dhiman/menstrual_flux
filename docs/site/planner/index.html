@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#292035">
+    <meta name="color-scheme" content="light">
+    <meta
+      name="description"
+      content="A private, installable period-planning app that estimates a date range from cycle starts stored only on this device."
+    >
+    <meta property="og:title" content="Menstrual Flux · Cycle Planner">
+    <meta
+      property="og:description"
+      content="A transparent planning estimate with uncertainty—not an exact promise."
+    >
+    <meta property="og:type" content="website">
+    <meta
+      property="og:url"
+      content="https://nalin-dhiman.github.io/menstrual_flux/planner/"
+    >
+    <link
+      rel="canonical"
+      href="https://nalin-dhiman.github.io/menstrual_flux/planner/"
+    >
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/flux-mark.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="app.css">
+    <title>Menstrual Flux · Cycle Planner</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <aside class="side-rail">
+        <a class="brand" href="./" aria-label="Cycle Planner home">
+          <img src="assets/flux-mark.svg" alt="" width="46" height="46">
+          <span>
+            <strong>Menstrual Flux</strong>
+            <small>Cycle Planner</small>
+          </span>
+        </a>
+
+        <nav class="side-nav" aria-label="Planner">
+          <button class="nav-item active" type="button" data-view="today">
+            <span aria-hidden="true">✦</span>
+            <span>Today</span>
+          </button>
+          <button class="nav-item" type="button" data-view="history">
+            <span aria-hidden="true">◌</span>
+            <span>History</span>
+          </button>
+          <button class="nav-item" type="button" data-view="insights">
+            <span aria-hidden="true">↝</span>
+            <span>Pattern</span>
+          </button>
+          <button class="nav-item" type="button" data-view="privacy">
+            <span aria-hidden="true">◇</span>
+            <span>Privacy</span>
+          </button>
+        </nav>
+
+        <div class="local-stamp">
+          <span class="local-dot" aria-hidden="true"></span>
+          <div>
+            <strong>Private by default</strong>
+            <span>Dates stay in this browser.</span>
+          </div>
+        </div>
+
+        <p class="side-scope">
+          A rough planning estimate for adults. Not for fertility, contraception,
+          diagnosis, or treatment.
+        </p>
+
+        <div class="side-footer">
+          <span>© 2026 Nalin Dhiman</span>
+          <span>IIT Mandi</span>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <a class="mobile-brand" href="./" aria-label="Cycle Planner home">
+            <img src="assets/flux-mark.svg" alt="" width="38" height="38">
+            <span>
+              <strong>Cycle Planner</strong>
+              <small>Menstrual Flux</small>
+            </span>
+          </a>
+          <div class="topbar-actions">
+            <span class="device-pill">
+              <span aria-hidden="true">◇</span>
+              On-device
+            </span>
+            <button class="button quiet install-button" type="button" id="install-app">
+              <span aria-hidden="true">↓</span> Install
+            </button>
+            <a
+              class="button quiet research-link"
+              href="https://nalin-dhiman.github.io/menstrual_flux/"
+              aria-label="Open the Menstrual Flux Research Explorer"
+            >Research Explorer <span aria-hidden="true">↗</span></a>
+          </div>
+        </header>
+
+        <main id="main-content">
+          <section class="view active" id="view-today" data-page="today">
+            <div class="page-heading">
+              <div>
+                <span class="kicker">Your planning window</span>
+                <h1 id="greeting">Good day</h1>
+                <p id="today-label"></p>
+              </div>
+              <button class="button secondary" type="button" id="record-today">
+                <span aria-hidden="true">＋</span> Period started today
+              </button>
+            </div>
+
+            <section class="prediction-card" id="prediction-card" aria-live="polite">
+              <div class="prediction-orbit" aria-hidden="true">
+                <span></span>
+                <i></i>
+              </div>
+              <div class="prediction-content" id="prediction-content"></div>
+            </section>
+
+            <section class="empty-state hidden" id="empty-state">
+              <div class="empty-illustration" aria-hidden="true">
+                <span>1</span><i></i><span>2</span><i></i><span>3</span>
+              </div>
+              <span class="kicker">Begin with real history</span>
+              <h2>Add at least two period start dates</h2>
+              <p>
+                Three to six dates are better. The planner learns intervals
+                between starts and shows a range instead of promising one exact day.
+              </p>
+              <form class="inline-date-form" id="quick-add-form" novalidate>
+                <label for="quick-date">Period start date</label>
+                <div>
+                  <input id="quick-date" name="start-date" type="date" required>
+                  <button class="button primary" type="submit">Add date</button>
+                </div>
+                <p class="form-message" id="quick-message" role="status"></p>
+              </form>
+              <button class="text-button" type="button" id="load-example">
+                Preview with clearly labelled example dates
+              </button>
+            </section>
+
+            <div class="metric-grid" id="metric-grid">
+              <article class="metric-card">
+                <span class="metric-icon plum" aria-hidden="true">◌</span>
+                <span class="metric-label">Typical interval</span>
+                <strong id="metric-typical">—</strong>
+                <small>Median of recorded intervals</small>
+              </article>
+              <article class="metric-card">
+                <span class="metric-icon coral" aria-hidden="true">↔</span>
+                <span class="metric-label">Personal variation</span>
+                <strong id="metric-variation">—</strong>
+                <small>Estimated timing spread</small>
+              </article>
+              <article class="metric-card">
+                <span class="metric-icon teal" aria-hidden="true">✓</span>
+                <span class="metric-label">History</span>
+                <strong id="metric-history">—</strong>
+                <small>Recorded period starts</small>
+              </article>
+            </div>
+
+            <section class="explanation-card" id="explanation-card">
+              <div class="explanation-mark" aria-hidden="true">i</div>
+              <div>
+                <strong>Why a range?</strong>
+                <p>
+                  Cycle timing changes. The darker window is the more likely
+                  region; the wider band keeps more of the model’s uncertainty visible.
+                </p>
+              </div>
+              <button class="text-button" type="button" data-view-jump="insights">
+                See how it works
+              </button>
+            </section>
+          </section>
+
+          <section class="view" id="view-history" data-page="history">
+            <div class="page-heading">
+              <div>
+                <span class="kicker">Your local record</span>
+                <h1>Cycle history</h1>
+                <p>Add the first day of bleeding for each period.</p>
+              </div>
+            </div>
+
+            <div class="two-column">
+              <section class="panel add-panel">
+                <span class="panel-number">01</span>
+                <h2>Add a period start</h2>
+                <p>
+                  Only start dates are needed for this release. Symptoms,
+                  location, contacts and account details are not collected.
+                </p>
+                <form id="history-add-form" novalidate>
+                  <label for="history-date">First day of the period</label>
+                  <input id="history-date" name="start-date" type="date" required>
+                  <button class="button primary wide" type="submit">Add to history</button>
+                  <p class="form-message" id="history-message" role="status"></p>
+                </form>
+              </section>
+
+              <section class="panel history-panel">
+                <div class="panel-heading">
+                  <div>
+                    <span class="panel-number">02</span>
+                    <h2>Recorded starts</h2>
+                  </div>
+                  <span class="count-badge" id="history-count">0 dates</span>
+                </div>
+                <ol class="history-list" id="history-list"></ol>
+                <div class="list-empty" id="history-empty">
+                  No dates yet. Add the most recent start first or enter older
+                  dates in any order.
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section class="view" id="view-insights" data-page="insights">
+            <div class="page-heading">
+              <div>
+                <span class="kicker">Transparent, not mysterious</span>
+                <h1>Your timing pattern</h1>
+                <p>The calculation and its limitations stay visible.</p>
+              </div>
+            </div>
+
+            <section class="panel chart-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-number">01</span>
+                  <h2>Recorded interval lengths</h2>
+                </div>
+                <div class="chart-legend">
+                  <span><i class="regular"></i>21–35 days</span>
+                  <span><i class="outside"></i>Outside that band</span>
+                </div>
+              </div>
+              <div class="interval-chart" id="interval-chart"></div>
+              <p class="chart-caption" id="chart-caption"></p>
+            </section>
+
+            <div class="two-column insight-grid">
+              <section class="panel">
+                <span class="panel-number">02</span>
+                <h2>Personal back-check</h2>
+                <div id="backtest-content" class="backtest-content"></div>
+              </section>
+              <section class="panel">
+                <span class="panel-number">03</span>
+                <h2>How this estimate is built</h2>
+                <ol class="method-list">
+                  <li><span>1</span>Measure intervals between recorded starts.</li>
+                  <li><span>2</span>Give recent intervals slightly more weight.</li>
+                  <li><span>3</span>Use a population anchor when history is short.</li>
+                  <li><span>4</span>Widen the window when timing varies.</li>
+                </ol>
+              </section>
+            </div>
+
+            <section class="boundary-card">
+              <div>
+                <span class="kicker">Deliberate boundary</span>
+                <h2>This app does not estimate ovulation or “safe days.”</h2>
+              </div>
+              <p>
+                Calendar timing alone cannot establish fertility. The planner
+                is for everyday preparation and record keeping, not pregnancy
+                prevention or conception decisions.
+              </p>
+            </section>
+          </section>
+
+          <section class="view" id="view-privacy" data-page="privacy">
+            <div class="page-heading">
+              <div>
+                <span class="kicker">Privacy before scale</span>
+                <h1>Your data controls</h1>
+                <p>No account, cloud database, advertisements or analytics.</p>
+              </div>
+            </div>
+
+            <div class="privacy-hero">
+              <div class="privacy-lock" aria-hidden="true">
+                <span>◇</span>
+              </div>
+              <div>
+                <span class="kicker">Local-only release</span>
+                <h2>Your dates stay in this browser on this device.</h2>
+                <p>
+                  Closing the page does not delete them. Clearing browser storage
+                  or using the erase control below does. A private browsing window
+                  may discard them when it closes.
+                </p>
+              </div>
+            </div>
+
+            <div class="privacy-grid">
+              <article class="privacy-card">
+                <span aria-hidden="true">◎</span>
+                <h3>What is stored</h3>
+                <p>Age acknowledgement, period start dates and whether example data are active.</p>
+              </article>
+              <article class="privacy-card">
+                <span aria-hidden="true">×</span>
+                <h3>What is not collected</h3>
+                <p>Name, email, location, contacts, advertising identifiers, symptoms or fertility data.</p>
+              </article>
+              <article class="privacy-card">
+                <span aria-hidden="true">↯</span>
+                <h3>No research upload yet</h3>
+                <p>Research contribution will require a separate reviewed consent process. It is disabled here.</p>
+              </article>
+            </div>
+
+            <section class="panel data-actions">
+              <div>
+                <span class="panel-number">Your copy</span>
+                <h2>Export or erase</h2>
+                <p>
+                  Export produces a readable JSON file. Erase removes the planner
+                  record from this browser and returns to the age acknowledgement.
+                </p>
+              </div>
+              <div class="action-stack">
+                <button class="button secondary" type="button" id="export-data">
+                  <span aria-hidden="true">↓</span> Export my dates
+                </button>
+                <button class="button danger" type="button" id="request-erase">
+                  <span aria-hidden="true">×</span> Erase local data
+                </button>
+              </div>
+            </section>
+
+            <section class="scope-note">
+              <strong>Planning support, not medical guidance.</strong>
+              <p>
+                If your usual pattern changes, bleeding concerns you, or a period
+                is unexpectedly absent, use an appropriate pregnancy test when
+                relevant and contact a qualified health professional.
+              </p>
+              <a
+                href="https://www.nhs.uk/symptoms/irregular-periods/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Read general NHS information <span aria-hidden="true">↗</span></a>
+            </section>
+          </section>
+        </main>
+
+        <footer class="workspace-footer">
+          <span>Menstrual Flux Cycle Planner · v0.1</span>
+          <span>© 2026 Nalin Dhiman · IIT Mandi</span>
+          <a href="privacy.html">Privacy notice</a>
+          <a href="https://github.com/nalin-dhiman/menstrual_flux">Source &amp; methods</a>
+        </footer>
+      </div>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Planner">
+      <button class="nav-item active" type="button" data-view="today">
+        <span aria-hidden="true">✦</span><small>Today</small>
+      </button>
+      <button class="nav-item" type="button" data-view="history">
+        <span aria-hidden="true">◌</span><small>History</small>
+      </button>
+      <button class="nav-item" type="button" data-view="insights">
+        <span aria-hidden="true">↝</span><small>Pattern</small>
+      </button>
+      <button class="nav-item" type="button" data-view="privacy">
+        <span aria-hidden="true">◇</span><small>Privacy</small>
+      </button>
+    </nav>
+
+    <div class="consent-layer" id="consent-layer" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+      <section class="consent-card">
+        <div class="consent-art" aria-hidden="true">
+          <img src="assets/flux-mark.svg" alt="" width="58" height="58">
+          <span></span>
+        </div>
+        <span class="kicker">Before you begin</span>
+        <h1 id="consent-title">A private planning tool, with honest uncertainty.</h1>
+        <p>
+          This first release stores period start dates only in this browser. It
+          gives a rough date range and does not provide fertility or clinical advice.
+        </p>
+        <div class="consent-points">
+          <label>
+            <input type="checkbox" id="adult-confirm">
+            <span><strong>I am 18 or older.</strong> This release is not designed to collect data from minors.</span>
+          </label>
+          <label>
+            <input type="checkbox" id="scope-confirm">
+            <span><strong>I understand the boundary.</strong> I will not use estimates for contraception, pregnancy decisions, diagnosis or treatment.</span>
+          </label>
+        </div>
+        <button class="button primary wide" type="button" id="continue-button" disabled>
+          Continue on this device
+        </button>
+        <small>No name, email or account is requested.</small>
+      </section>
+    </div>
+
+    <dialog id="date-warning-dialog">
+      <form method="dialog" class="dialog-card">
+        <span class="dialog-symbol warning" aria-hidden="true">!</span>
+        <h2>Check this interval</h2>
+        <p id="date-warning-copy"></p>
+        <div class="dialog-actions">
+          <button class="button quiet" value="cancel">Go back</button>
+          <button class="button primary" value="confirm">Add anyway</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="erase-dialog">
+      <form method="dialog" class="dialog-card">
+        <span class="dialog-symbol danger" aria-hidden="true">×</span>
+        <h2>Erase this browser’s planner data?</h2>
+        <p>
+          This removes all recorded dates and the age acknowledgement from this
+          browser. Export first if you want a copy.
+        </p>
+        <div class="dialog-actions">
+          <button class="button quiet" value="cancel">Keep my data</button>
+          <button class="button danger" value="erase">Erase permanently</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="install-dialog">
+      <form method="dialog" class="dialog-card">
+        <span class="dialog-symbol install" aria-hidden="true">↓</span>
+        <h2>Install Cycle Planner</h2>
+        <p id="install-copy">
+          Use your browser menu and choose “Install app” or “Add to Home Screen.”
+          The planner can then open like a normal phone app.
+        </p>
+        <div class="dialog-actions">
+          <button class="button primary" value="close">Got it</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
