@@ -9,6 +9,11 @@ The implementation is intended for mathematical and computational research. It
 is not a clinical system and must not be used for contraception, pregnancy
 planning, diagnosis, treatment, or triage.
 
+![Menstrual Flux Research Explorer](app/screenshots/01_observatory.png)
+
+The interactive interface and complete screenshot gallery are documented in
+[app/README.md](app/README.md).
+
 ## What is included
 
 - A reduced two-stage follicular/luteal first-passage model.

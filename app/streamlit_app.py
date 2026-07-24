@@ -1,12 +1,21 @@
+# ruff: noqa: E402
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 import streamlit as st
 import yaml
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 from digital_twin.data.schemas import OBSERVATION_FIELDS
 from digital_twin.dynamics.coupled_fokker_planck import solve_coupled_cycle
@@ -18,6 +27,7 @@ from digital_twin.gui.analytics import (
     cycle_duration_table,
     dataframe_to_csv,
     format_config,
+    lifespan_scenarios,
     missingness_table,
     safe_numeric_summary,
     validate_uploaded_frame,
@@ -47,9 +57,11 @@ from digital_twin.gui.theme import (
 from digital_twin.simulation.cohort import simulate_cohort
 
 
-ROOT = Path(__file__).resolve().parents[1]
 ASSET = ROOT / "app" / "assets" / "flux_mark.svg"
 AGGREGATE_DATA = ROOT / "data" / "theory" / "menstrual_age_aggregate_2024.csv"
+ALLOW_LOCAL_UPLOADS = os.environ.get(
+    "MENSTRUAL_FLUX_ALLOW_UPLOADS", ""
+).strip().lower() in {"1", "true", "yes"}
 
 
 st.set_page_config(
@@ -118,7 +130,10 @@ def _sidebar() -> str:
         """,
         unsafe_allow_html=True,
     )
-    st.sidebar.caption("v0.5 interface · stochastic passage-and-reset model")
+    mode = "local data mode" if ALLOW_LOCAL_UPLOADS else "public-safe demo"
+    st.sidebar.caption(
+        f"v0.5 interface · stochastic passage-and-reset model · {mode}"
+    )
     return section
 
 
@@ -646,38 +661,6 @@ def flux_studio() -> None:
         _plot(density_heatmap_figure(result), key="coupled_density")
 
 
-def _interruption_scenarios() -> dict[str, tuple[dict[str, float | str], ...]]:
-    return {
-        "Uninterrupted reference": (),
-        "Two pregnancy + six-month postpartum windows": (
-            {"state": "pregnancy", "start_age": 27.0, "end_age": 27.767},
-            {
-                "state": "postpartum_lactational_amenorrhea",
-                "start_age": 27.767,
-                "end_age": 28.267,
-            },
-            {"state": "pregnancy", "start_age": 31.0, "end_age": 31.767},
-            {
-                "state": "postpartum_lactational_amenorrhea",
-                "start_age": 31.767,
-                "end_age": 32.267,
-            },
-        ),
-        "Two cycle-suppressing exposure windows": (
-            {
-                "state": "cycle_suppressing_hormonal_exposure",
-                "start_age": 20.0,
-                "end_age": 27.0,
-            },
-            {
-                "state": "cycle_suppressing_hormonal_exposure",
-                "start_age": 34.0,
-                "end_age": 39.0,
-            },
-        ),
-    }
-
-
 def lifespan_atlas() -> None:
     page_intro(
         "Aggregate-constrained scenario engine",
@@ -714,7 +697,7 @@ def lifespan_atlas() -> None:
             follicular_variance = st.slider(
                 "Follicular variance fraction", 0.50, 0.95, 0.75, 0.01
             )
-        scenarios = _interruption_scenarios()
+        scenarios = lifespan_scenarios()
         scenario_name = st.selectbox(
             "Interruption scenario",
             tuple(scenarios),
@@ -839,15 +822,27 @@ def data_quality_studio() -> None:
         "Data Quality Studio",
         "Inspect a CSV before modelling. The studio checks the supported schema, timestamp consistency, missing values, basic ranges and table completeness.",
     )
-    callout(
-        "Uploaded data are processed in the running application session. For sensitive data, run this application locally and do not use an unapproved public deployment.",
-        tone="warning",
-        icon="▦",
-    )
+    if ALLOW_LOCAL_UPLOADS:
+        callout(
+            "Uploaded data are processed in this local application session. "
+            "Use only data covered by appropriate governance and approvals.",
+            tone="warning",
+            icon="▦",
+        )
+    else:
+        callout(
+            "This public demo accepts no participant uploads and uses only the "
+            "included synthetic examples. Start the application locally with "
+            "explicit permission to audit a research CSV.",
+            icon="◇",
+        )
 
+    sources = ["Included long-form example", "Included wide example"]
+    if ALLOW_LOCAL_UPLOADS:
+        sources.append("Upload CSV")
     source = st.radio(
         "Data source",
-        ("Included long-form example", "Included wide example", "Upload CSV"),
+        sources,
         horizontal=True,
     )
     frame: pd.DataFrame | None = None

@@ -5,6 +5,7 @@ from .analytics import (
     build_research_config,
     cohort_summary,
     cycle_duration_table,
+    lifespan_scenarios,
     validate_uploaded_frame,
 )
 
@@ -13,5 +14,6 @@ __all__ = [
     "build_research_config",
     "cohort_summary",
     "cycle_duration_table",
+    "lifespan_scenarios",
     "validate_uploaded_frame",
 ]

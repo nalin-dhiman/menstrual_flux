@@ -24,7 +24,7 @@ test:
 gui:
 	@echo "Keep this terminal open while using the GUI."
 	@echo "Open http://$(GUI_HOST):$(GUI_PORT) in a browser on this computer."
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m streamlit run app/streamlit_app.py --server.address $(GUI_HOST) --server.port $(GUI_PORT) --server.headless true
+	MENSTRUAL_FLUX_ALLOW_UPLOADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m streamlit run app/streamlit_app.py --server.address $(GUI_HOST) --server.port $(GUI_PORT) --server.headless true
 
 gui-health:
 	@curl --fail --silent --show-error http://$(GUI_HOST):$(GUI_PORT)/_stcore/health

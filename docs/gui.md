@@ -5,6 +5,9 @@ stochastic model. It calls the same functions used by the command-line
 workflows and does not contain a separate implementation of the scientific
 model.
 
+The visual gallery and software-oriented overview are in
+[`../app/README.md`](../app/README.md).
+
 ## Launch
 
 Install the GUI dependencies and start the local server:
@@ -72,3 +75,6 @@ The interface supports research, teaching, synthetic experiments and
 method-development workflows. It does not provide diagnosis, contraception,
 pregnancy planning, treatment, confirmed ovulation, fertility assessment or
 clinical triage.
+
+The hosted public-safe mode disables arbitrary CSV uploads. `make gui` enables
+uploads only for an explicitly local process.

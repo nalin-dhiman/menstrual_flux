@@ -71,7 +71,7 @@ h1, h2, h3 {
 
 .block-container {
   max-width: 1380px;
-  padding-top: 2.2rem;
+  padding-top: 3.45rem;
   padding-bottom: 4rem;
 }
 
@@ -291,7 +291,7 @@ h1, h2, h3 {
 }
 
 @media (max-width: 700px) {
-  .block-container { padding: 1rem .8rem 3rem; }
+  .block-container { padding: 3.2rem .8rem 3rem; }
   .flux-hero { padding: 1.65rem 1.25rem; border-radius: 1.1rem; }
   .flux-hero h1 { font-size: 2.25rem !important; }
 }
@@ -306,10 +306,12 @@ def apply_theme() -> None:
 def page_intro(kicker: str, title: str, body: str) -> None:
     st.markdown(
         f"""
-        <div class="flux-kicker">{escape(kicker)}</div>
-        <h1 style="margin-bottom:.35rem">{escape(title)}</h1>
-        <p style="max-width:850px;color:#676a7d;line-height:1.65">{escape(body)}</p>
-        <div class="section-rule"></div>
+        <div class="flux-page-intro">
+          <h1 style="margin-bottom:.35rem">{escape(title)}</h1>
+          <div class="flux-kicker">{escape(kicker)}</div>
+          <p style="max-width:850px;color:#676a7d;line-height:1.65">{escape(body)}</p>
+          <div class="section-rule"></div>
+        </div>
         """,
         unsafe_allow_html=True,
     )

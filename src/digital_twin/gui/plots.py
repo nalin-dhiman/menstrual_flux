@@ -146,7 +146,7 @@ def latent_progress_figure(
         figure.add_trace(
             go.Scatter(
                 x=transitions["event_time"],
-                y=transitions["progress"],
+                y=np.ones(len(transitions)),
                 mode="markers",
                 name="Boundary crossing",
                 marker=dict(

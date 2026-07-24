@@ -95,6 +95,105 @@ def build_research_config(
     return config
 
 
+def lifespan_scenarios() -> dict[
+    str, tuple[dict[str, float | str], ...]
+]:
+    """Named, explicit no-cycle windows exposed by the research GUI."""
+
+    pregnancy_one = {
+        "state": "pregnancy",
+        "start_age": 27.0,
+        "end_age": 27.767,
+    }
+    pregnancy_two = {
+        "state": "pregnancy",
+        "start_age": 31.0,
+        "end_age": 31.767,
+    }
+    suppressing_windows = (
+        {
+            "state": "cycle_suppressing_hormonal_exposure",
+            "start_age": 20.0,
+            "end_age": 27.0,
+        },
+        {
+            "state": "cycle_suppressing_hormonal_exposure",
+            "start_age": 34.0,
+            "end_age": 39.0,
+        },
+    )
+    return {
+        "Uninterrupted reference": (),
+        "Two births · short postpartum": (
+            pregnancy_one,
+            {
+                "state": "postpartum_nonlactating_assumption",
+                "start_age": 27.767,
+                "end_age": 27.882,
+            },
+            pregnancy_two,
+            {
+                "state": "postpartum_nonlactating_assumption",
+                "start_age": 31.767,
+                "end_age": 31.882,
+            },
+        ),
+        "Two births · six-month postpartum": (
+            pregnancy_one,
+            {
+                "state": "postpartum_lactational_amenorrhea",
+                "start_age": 27.767,
+                "end_age": 28.267,
+            },
+            pregnancy_two,
+            {
+                "state": "postpartum_lactational_amenorrhea",
+                "start_age": 31.767,
+                "end_age": 32.267,
+            },
+        ),
+        "Two births · twelve-month postpartum": (
+            pregnancy_one,
+            {
+                "state": "extended_postpartum_amenorrhea_assumption",
+                "start_age": 27.767,
+                "end_age": 28.767,
+            },
+            pregnancy_two,
+            {
+                "state": "extended_postpartum_amenorrhea_assumption",
+                "start_age": 31.767,
+                "end_age": 32.767,
+            },
+        ),
+        "Cycle-suppressing exposure windows": suppressing_windows,
+        "Combined example": (
+            {
+                "state": "cycle_suppressing_hormonal_exposure",
+                "start_age": 20.0,
+                "end_age": 25.0,
+            },
+            pregnancy_one,
+            {
+                "state": "postpartum_lactational_amenorrhea",
+                "start_age": 27.767,
+                "end_age": 28.267,
+            },
+            pregnancy_two,
+            {
+                "state": "postpartum_lactational_amenorrhea",
+                "start_age": 31.767,
+                "end_age": 32.267,
+            },
+            {
+                "state": "cycle_suppressing_hormonal_exposure",
+                "start_age": 35.0,
+                "end_age": 40.0,
+            },
+        ),
+    }
+
+
 def cycle_duration_table(events: pd.DataFrame) -> pd.DataFrame:
     """Derive complete menstruation-to-menstruation intervals."""
 
