@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#241d30">
+    <meta
+      name="description"
+      content="Menstrual Flux Research Explorer: an interactive, non-clinical interface for stochastic menstrual-cycle modelling."
+    >
+    <meta property="og:title" content="Menstrual Flux Research Explorer">
+    <meta
+      property="og:description"
+      content="Explore stochastic passage-and-reset dynamics, probability flux, synthetic cohorts, and lifespan scenarios."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nalin-dhiman.github.io/menstrual_flux/">
+    <meta
+      property="og:image"
+      content="https://nalin-dhiman.github.io/menstrual_flux/assets/observatory.png"
+    >
+    <link rel="canonical" href="https://nalin-dhiman.github.io/menstrual_flux/">
+    <link rel="icon" href="assets/flux-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/site.css">
+    <title>Menstrual Flux · Research Explorer</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#application">Skip to application</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Menstrual Flux home">
+        <img src="assets/flux-mark.svg" alt="" width="42" height="42">
+        <span>
+          <strong>Menstrual Flux</strong>
+          <small>Research Explorer</small>
+        </span>
+      </a>
+      <nav aria-label="Project links">
+        <span class="status"><i aria-hidden="true"></i> Live research software</span>
+        <a href="https://github.com/nalin-dhiman/menstrual_flux">Source &amp; methods</a>
+        <a
+          class="primary-link"
+          href="https://menstrualflux.streamlit.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Open full screen <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="application">
+      <section class="context-bar" aria-label="Application context">
+        <div>
+          <span class="eyebrow">Interactive stochastic modelling</span>
+          <h1>Cycles as flows, not calendar dots.</h1>
+        </div>
+        <p>
+          Synthetic experiments, probability transport, first-passage timing,
+          lifespan scenarios, and data-quality checks—all powered by the same
+          tested Python application.
+        </p>
+        <div class="scope">
+          <strong>Research use only.</strong>
+          No diagnosis, fertility guidance, contraception, treatment, or
+          clinical decisions.
+        </div>
+      </section>
+
+      <section class="app-frame" aria-label="Embedded Menstrual Flux application">
+        <div class="loading" id="loading" role="status">
+          <img src="assets/flux-mark.svg" alt="" width="58" height="58">
+          <strong>Opening the Research Explorer</strong>
+          <span>The public application may take a moment to wake.</span>
+        </div>
+        <iframe
+          id="flux-app"
+          title="Menstrual Flux interactive research application"
+          src="https://menstrualflux.streamlit.app/?embed=true"
+          allow="clipboard-write; fullscreen"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+        <noscript>
+          <p class="fallback">
+            JavaScript is disabled.
+            <a href="https://menstrualflux.streamlit.app/">Open the application directly.</a>
+          </p>
+        </noscript>
+      </section>
+
+      <section class="fallback-bar">
+        <span>Nothing visible above?</span>
+        <a
+          href="https://menstrualflux.streamlit.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Open the live app in a new tab</a>
+        <span>·</span>
+        <a href="https://github.com/nalin-dhiman/menstrual_flux/tree/main/app">
+          View the GUI guide and screenshots
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© 2026 Nalin Dhiman · IIT Mandi</span>
+      <span>Menstrual Flux Research Explorer</span>
+      <a href="https://github.com/nalin-dhiman/menstrual_flux/blob/main/COPYRIGHT.md">
+        Copyright notice
+      </a>
+    </footer>
+
+    <script>
+      const frame = document.getElementById("flux-app");
+      const loading = document.getElementById("loading");
+      frame.addEventListener("load", () => {
+        loading.classList.add("is-hidden");
+        frame.classList.add("is-ready");
+      });
+    </script>
+  </body>
+</html>

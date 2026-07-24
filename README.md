@@ -14,6 +14,10 @@ planning, diagnosis, treatment, or triage.
 The interactive interface and complete screenshot gallery are documented in
 [app/README.md](app/README.md).
 
+[Open the live Research Explorer](https://menstrualflux.streamlit.app/) or use
+the [GitHub Pages interface](https://nalin-dhiman.github.io/menstrual_flux/),
+which presents the same live application in a project-branded host.
+
 ## What is included
 
 - A reduced two-stage follicular/luteal first-passage model.
@@ -173,3 +177,6 @@ The models are phenomenological: their latent variables provide a tractable
 description of stage progression and uncertainty, not a causal reconstruction
 of endocrine physiology. See [NOTICE.md](NOTICE.md) for the research-use,
 governance, and current licensing notice.
+
+Copyright © 2026 Nalin Dhiman. The author affiliation is Indian Institute of
+Technology Mandi (IIT Mandi). See [COPYRIGHT.md](COPYRIGHT.md).

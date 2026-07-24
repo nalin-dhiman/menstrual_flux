@@ -75,6 +75,30 @@ h1, h2, h3 {
   padding-bottom: 4rem;
 }
 
+.flux-attribution {
+  color: rgba(255,255,255,.76) !important;
+  font-size: .70rem;
+  line-height: 1.55;
+  margin-top: .75rem;
+}
+
+.flux-attribution span {
+  color: rgba(255,255,255,.52) !important;
+}
+
+.flux-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .55rem 1.2rem;
+  margin-top: 3.2rem;
+  padding: 1.15rem .2rem .25rem;
+  border-top: 1px solid rgba(73,58,78,.13);
+  color: var(--flux-muted);
+  font-size: .72rem;
+  letter-spacing: .025em;
+}
+
 .flux-brand {
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   font-size: 1.55rem;

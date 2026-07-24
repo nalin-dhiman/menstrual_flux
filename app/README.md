@@ -11,6 +11,15 @@ method development and transparent exploration of model assumptions. It does
 not provide diagnosis, contraception, pregnancy planning, confirmed ovulation,
 fertility assessment, treatment or triage.
 
+## Live application
+
+- [Open the Streamlit application](https://menstrualflux.streamlit.app/)
+- [Open the GitHub Pages interface](https://nalin-dhiman.github.io/menstrual_flux/)
+
+The GitHub Pages interface embeds the same Streamlit application; it is not a
+second or simplified scientific implementation. A full-screen link remains
+available when a browser or privacy extension blocks embedded content.
+
 ## Explore the application
 
 | Synthetic Cycle Lab | Flux & First Passage |
@@ -110,3 +119,6 @@ src/digital_twin/gui/
 
 Presentation, numerical services and plotting are separated so they can be
 tested independently.
+
+Copyright © 2026 Nalin Dhiman. Author affiliation: Indian Institute of
+Technology Mandi (IIT Mandi). See [`../COPYRIGHT.md`](../COPYRIGHT.md).

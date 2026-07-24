@@ -72,7 +72,8 @@ st.set_page_config(
     menu_items={
         "About": (
             "Menstrual Flux Research Explorer — a non-clinical interface for "
-            "stochastic menstrual-cycle modelling."
+            "stochastic menstrual-cycle modelling. Created by Nalin Dhiman, "
+            "IIT Mandi. © 2026 Nalin Dhiman."
         )
     },
 )
@@ -133,6 +134,15 @@ def _sidebar() -> str:
     mode = "local data mode" if ALLOW_LOCAL_UPLOADS else "public-safe demo"
     st.sidebar.caption(
         f"v0.5 interface · stochastic passage-and-reset model · {mode}"
+    )
+    st.sidebar.markdown(
+        """
+        <div class="flux-attribution">
+          © 2026 Nalin Dhiman<br>
+          <span>Indian Institute of Technology Mandi</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
     return section
 
@@ -1078,3 +1088,14 @@ elif "Data Quality" in section:
     data_quality_studio()
 else:
     methods_and_scope()
+
+st.markdown(
+    """
+    <footer class="flux-footer">
+      <span>Menstrual Flux Research Explorer</span>
+      <span>© 2026 Nalin Dhiman · IIT Mandi</span>
+      <span>Research software · Non-clinical</span>
+    </footer>
+    """,
+    unsafe_allow_html=True,
+)
