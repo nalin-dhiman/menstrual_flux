@@ -23,6 +23,8 @@ for a separate, installable and local-only period-planning experience. The
 planner estimates a date range from recorded period starts. It does not
 estimate fertility or provide clinical guidance. Its design and privacy
 boundary are documented in [consumer_app/README.md](consumer_app/README.md).
+An [independent public host](https://menstrual-flux-cycle-planner.drjassneuro.chatgpt.site/)
+serves the same verified application source.
 
 ## What is included
 

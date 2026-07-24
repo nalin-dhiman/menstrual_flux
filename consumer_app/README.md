@@ -6,6 +6,8 @@ recorded period start dates and communicates timing as nested date ranges.
 
 [Open the public Cycle Planner](https://nalin-dhiman.github.io/menstrual_flux/planner/)
 
+[Open the independent app host](https://menstrual-flux-cycle-planner.drjassneuro.chatgpt.site/)
+
 ![Cycle Planner planning window](screenshots/01_planning_window.png)
 
 | Timing pattern | Privacy controls | Installable phone view |
@@ -41,6 +43,10 @@ The public release has no research-upload endpoint. Any future contribution
 feature requires a separate, explicit opt-in consent flow, ethics review,
 retention policy, deletion process, access controls and security assessment.
 It must not be introduced as a preselected condition of using the planner.
+
+The hosting providers still receive ordinary web requests needed to deliver
+the application and may apply infrastructure security controls. Period starts
+remain in browser storage and are never inserted into those requests.
 
 The human-readable web notice is available at
 [`../docs/site/planner/privacy.html`](../docs/site/planner/privacy.html).
@@ -108,9 +114,11 @@ consumer_app/sites/
 ```
 
 The Sites deployment packages the same static PWA under
-`.open-next/assets/`. Its small edge entrypoint serves those assets and adds a
-restrictive content-security policy, permissions policy, no-referrer policy and
-content-type protection. No application data is processed by the worker.
+`.open-next/assets/`. Its small edge entrypoint serves those assets and defines
+defensive response headers where the runtime path supports them. The HTML also
+enforces a restrictive content-security policy and no-referrer policy, so those
+controls do not depend on a particular static-asset routing path. No cycle data
+is processed by the worker.
 
 Copyright © 2026 Nalin Dhiman. Author affiliation: Indian Institute of
 Technology Mandi (IIT Mandi). See [`../COPYRIGHT.md`](../COPYRIGHT.md).
